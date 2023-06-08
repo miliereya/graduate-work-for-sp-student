@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CourseSchema = new Schema({
-	title: { type: String, required: true },
-	text: { type: String, required: true },
+	title: { type: String },
+	text: { type: String },
 	tests: [{ type: Schema.Types.ObjectId, ref: 'Test' }],
 })
 

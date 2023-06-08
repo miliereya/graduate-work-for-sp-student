@@ -1,7 +1,7 @@
 const ApiError = require('../exceptions/api.exception')
 const UserService = require('../services/user.service')
 
-module.exports = function (req, res, next) {
+module.exports = async function (req, res, next) {
 	try {
 		const token = req.headers.token
 
@@ -9,11 +9,11 @@ module.exports = function (req, res, next) {
 			return next(ApiError.UnauthorizedError())
 		}
 
-		const user = UserService.validateToken(token)
+		const user = await UserService.validateToken(token)
 		if (!user) {
 			return next(ApiError.UnauthorizedError())
 		}
-		if (!user.isAdmin) {
+		if (user.isAdmin !== true) {
 			return next(ApiError.NoAccessRequestError())
 		}
 		req.user = user

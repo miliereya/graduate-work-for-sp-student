@@ -58,11 +58,6 @@ class UserService {
 		const data = await this.returnUser(user)
 		return data
 	}
-	async logout(refreshToken) {
-		const token = await tokenService.removeToken(refreshToken)
-
-		return token
-	}
 }
 
 module.exports = new UserService()
