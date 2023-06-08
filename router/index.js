@@ -13,7 +13,13 @@ router.get('/course/find', courseController.findAll)
 router.get('/course/find-admin', adminMiddleware, courseController.findAllAdmin)
 router.post('/course/create', adminMiddleware, courseController.create)
 router.post('/course/update', adminMiddleware, courseController.update)
+router.post('/course/complete', authMiddleware, courseController.completeCourse)
 router.delete('/course/:_id', adminMiddleware, courseController.delete)
 router.get('/course/:_id', courseController.findById)
+router.get(
+	'/course/statistics/:_id',
+	adminMiddleware,
+	courseController.findByIdStatistics
+)
 
 module.exports = router
