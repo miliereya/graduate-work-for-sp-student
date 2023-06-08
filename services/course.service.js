@@ -1,4 +1,6 @@
 const CourseModel = require('../models/course.model')
+const TestModel = require('../models/test.model')
+const UserModel = require('../models/user.model')
 const ApiError = require('../exceptions/api.exception')
 const UserDto = require('../dto/user.dto')
 
@@ -10,7 +12,12 @@ class CourseService {
 	}
 
 	async findOne(_id) {
-		return await CourseModel.findById(_id)
+		const course = await CourseModel.findById(_id)
+		const tests = []
+		for (let i = 0; i < course.tests.length; i++) {
+			tests.push(await TestModel.findById(course.tests[i]))
+		}
+		return { ...course.toObject(), tests }
 	}
 
 	async findOneStatistic(_id) {
@@ -44,6 +51,9 @@ class CourseService {
 	async completeCourse(_id, userId) {
 		await CourseModel.findByIdAndUpdate(_id, {
 			$push: { userCompleted: userId },
+		})
+		await UserModel.findByIdAndUpdate(userId, {
+			$push: { coursesCompleted: _id },
 		})
 	}
 

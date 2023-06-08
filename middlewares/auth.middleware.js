@@ -1,5 +1,6 @@
 const ApiError = require('../exceptions/api.exception')
 const UserService = require('../services/user.service')
+const UserDto = require('../dto/user.dto')
 
 module.exports = async function (req, res, next) {
 	try {
@@ -13,7 +14,8 @@ module.exports = async function (req, res, next) {
 		if (!user) {
 			return next(ApiError.UnauthorizedError())
 		}
-		req.user = user
+		
+		req.user = new UserDto(user)
 		next()
 	} catch (e) {
 		return next(ApiError.UnauthorizedError())

@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TestSchema = new Schema({
-	title: { type: String, required: true },
+	title: { type: String },
 	questions: {
 		type: [
 			{
 				question: { type: String, required: true },
-				answers: { type: [], required: true },
+				answers: { type: Array, required: true },
 				correctAnswer: { type: String, required: true },
 			},
 		],
@@ -17,7 +17,7 @@ const TestSchema = new Schema({
 	results: {
 		type: [
 			{
-				userIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+				user: { type: Schema.Types.ObjectId, ref: 'User' },
 				result: { type: String, required: true },
 			},
 		],
