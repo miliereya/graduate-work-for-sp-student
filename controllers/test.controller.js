@@ -62,7 +62,6 @@ class TestController {
 	async complete(req, res, next) {
 		try {
 			const { _id, result } = req.body
-			console.log(result)
 			await TestService.complete(_id, req.user._id, result)
 			return res.status(200).json()
 		} catch (e) {
