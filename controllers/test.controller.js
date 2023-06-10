@@ -4,6 +4,7 @@ const ApiError = require('../exceptions/api.exception')
 require('dotenv').config()
 
 class TestController {
+	// Получаем все готовые тесты
 	async findAll(req, res, next) {
 		try {
 			const testData = await TestService.findAll()
@@ -13,6 +14,7 @@ class TestController {
 		}
 	}
 
+	// Получаем все тесты
 	async findAllAdmin(req, res, next) {
 		try {
 			const testData = await TestService.findAll(true)
@@ -22,6 +24,7 @@ class TestController {
 		}
 	}
 
+	// Получаем тест по id
 	async findById(req, res, next) {
 		try {
 			const testData = await TestService.findOne(req.params._id)
@@ -31,6 +34,7 @@ class TestController {
 		}
 	}
 
+	// Получаем статистику теста по id
 	async findByIdStatistics(req, res, next) {
 		try {
 			const testData = await TestService.findOneStatistic(req.params._id)
@@ -40,6 +44,7 @@ class TestController {
 		}
 	}
 
+	// Создание теста
 	async create(req, res, next) {
 		try {
 			const testData = await TestService.create()
@@ -49,6 +54,7 @@ class TestController {
 		}
 	}
 
+	// Обновление теста
 	async update(req, res, next) {
 		try {
 			const { _id, dto } = req.body
@@ -59,6 +65,7 @@ class TestController {
 		}
 	}
 
+	// Прохождение теста пользователем
 	async complete(req, res, next) {
 		try {
 			const { _id, result } = req.body
@@ -69,6 +76,7 @@ class TestController {
 		}
 	}
 
+	// Удаление теста
 	async delete(req, res, next) {
 		try {
 			const testData = await TestService.delete(req.params._id)

@@ -4,6 +4,7 @@ const ApiError = require('../exceptions/api.exception')
 require('dotenv').config()
 
 class CourseController {
+	// Получаем все готовые курсы
 	async findAll(req, res, next) {
 		try {
 			const courseData = await CourseService.findAll()
@@ -13,6 +14,7 @@ class CourseController {
 		}
 	}
 
+	// Получаем все курсы
 	async findAllAdmin(req, res, next) {
 		try {
 			const courseData = await CourseService.findAll(true)
@@ -22,6 +24,7 @@ class CourseController {
 		}
 	}
 
+	// Поиск курса по id
 	async findById(req, res, next) {
 		try {
 			const courseData = await CourseService.findOne(req.params._id)
@@ -31,6 +34,7 @@ class CourseController {
 		}
 	}
 
+	// Получаем статистику курса по id
 	async findByIdStatistics(req, res, next) {
 		try {
 			const courseData = await CourseService.findOneStatistic(req.params._id)
@@ -40,6 +44,7 @@ class CourseController {
 		}
 	}
 
+	// Создание курса
 	async create(req, res, next) {
 		try {
 			const courseData = await CourseService.create()
@@ -49,6 +54,7 @@ class CourseController {
 		}
 	}
 
+	// Обновление курса
 	async update(req, res, next) {
 		try {
 			const { _id, dto } = req.body
@@ -59,6 +65,7 @@ class CourseController {
 		}
 	}
 
+	// Прохождение курса пользователем
 	async completeCourse(req, res, next) {
 		try {
 			const { _id } = req.body
@@ -69,6 +76,7 @@ class CourseController {
 		}
 	}
 
+	// Удаление курса
 	async delete(req, res, next) {
 		try {
 			const courseData = await CourseService.delete(req.params._id)

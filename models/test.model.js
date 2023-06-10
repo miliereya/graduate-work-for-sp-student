@@ -17,6 +17,7 @@ const TestSchema = new Schema({
 	results: {
 		type: [
 			{
+				date: { type: Date, required: true },
 				user: { type: Schema.Types.ObjectId, ref: 'User' },
 				result: { type: String, required: true },
 			},

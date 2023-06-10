@@ -1,5 +1,6 @@
 const ApiError = require('../exceptions/api.exception')
 
+// Middleware для обработки ошибок
 module.exports = function (err, req, res, next) {
 	if (err instanceof ApiError) {
 		return res

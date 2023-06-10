@@ -6,10 +6,13 @@ const testController = require('../controllers/test.controller')
 const authMiddleware = require('../middlewares/auth.middleware')
 const adminMiddleware = require('../middlewares/admin.middleware')
 
+// Api пользователя
 router.get('/auth/refresh', authMiddleware, userController.refresh)
+router.get('/auth/profile', authMiddleware, userController.profile)
 router.post('/auth/register', userController.registration)
 router.post('/auth/login', userController.login)
 
+// Api курсов
 router.get('/course/find', courseController.findAll)
 router.get('/course/find-admin', adminMiddleware, courseController.findAllAdmin)
 router.post('/course/create', adminMiddleware, courseController.create)
@@ -23,6 +26,7 @@ router.get(
 	courseController.findByIdStatistics
 )
 
+// Api тестов
 router.get('/test/find', testController.findAll)
 router.get('/test/find-admin', adminMiddleware, testController.findAllAdmin)
 router.post('/test/create', adminMiddleware, testController.create)
