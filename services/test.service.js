@@ -9,7 +9,7 @@ require('dotenv').config()
 class CourseService {
 	async findAll(isAdmin) {
 		// Отсутствие флага isAdmin убирает из поиска тесты с незаполненными полями
-		return await TestModel.find(isAdmin ? {} : { title: { $ne: '' } })
+		return await TestModel.find(isAdmin ? {} : { title: { $ne: 'Новый тест' } })
 	}
 
 	async findOne(_id) {
@@ -27,7 +27,7 @@ class CourseService {
 				// Получаем публичные поля пользователя
 				user: new UserDto(await UserModel.findById(test.results[i].user)),
 				result: test.results[i].result,
-				date: test.results[i].date
+				date: test.results[i].date,
 			})
 		}
 
@@ -37,14 +37,14 @@ class CourseService {
 
 	async create() {
 		// Не даем возможность создать новый тест в случае наличия теста с незаполненными полями
-		const IsEmptyTest = await TestModel.findOne({ title: '' })
+		const IsEmptyTest = await TestModel.findOne({ title: 'Новый тест' })
 		if (IsEmptyTest) {
 			throw ApiError.BadRequest('Empty test already exists')
 		}
 
 		// Создаем пустой тест по шаблону
 		const test = await TestModel.create({
-			title: '',
+			title: 'Новый тест',
 			questions: [],
 			results: [],
 		})
@@ -76,6 +76,13 @@ class CourseService {
 
 	// Удаление теста
 	async delete(_id) {
+		await UserModel.updateMany(
+			{ testsCompleted: { $in: _id } },
+			{ $pull: { testsCompleted: _id } },
+			{
+				new: true,
+			}
+		)
 		await TestModel.findByIdAndDelete(_id)
 	}
 }

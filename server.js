@@ -27,7 +27,6 @@ const uri = process.env.MONGO_URI
 
 const start = () => {
 	try {
-
 		// Подключаем MongoDB
 		mongoose.set('strictQuery', true)
 		mongoose.connect(uri, {

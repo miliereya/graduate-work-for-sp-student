@@ -41,14 +41,14 @@ class CourseService {
 	// Создание курса
 	async create() {
 		// Не даем возможность создать новый курс в случае наличия курса с незаполненными полями
-		const isEmptyCourse = await CourseModel.findOne({ title: '' })
+		const isEmptyCourse = await CourseModel.findOne({ title: 'Новый курс' })
 		if (isEmptyCourse) {
 			throw ApiError.BadRequest('Empty course already exists')
 		}
 
 		// Создаем новый курс по шаблону с пустыми полями
 		const course = await CourseModel.create({
-			title: '',
+			title: 'Новый курс',
 			text: '',
 			tests: [],
 		})
@@ -76,6 +76,14 @@ class CourseService {
 
 	// Удаление курса
 	async delete(_id) {
+		await UserModel.updateMany(
+			{ coursesCompleted: { $in: _id } },
+			{ $pull: { coursesCompleted: _id } },
+			{
+				new: true,
+			}
+		)
+
 		await CourseModel.findByIdAndDelete(_id)
 	}
 }
